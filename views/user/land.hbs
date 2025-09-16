@@ -1,0 +1,57 @@
+<style>
+    .user-landing-container {
+        background: #fff;
+        max-width: 600px;
+        margin: 80px auto 0 auto;
+        padding: 40px 48px 48px 48px;
+        border-radius: 18px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+        text-align: center;
+    }
+
+    .user-landing-container h1 {
+        color: #f76b1c;
+        margin-bottom: 18px;
+    }
+
+    .user-landing-container p {
+        font-size: 1.15em;
+        color: #444;
+        margin-bottom: 32px;
+    }
+
+    .user-actions {
+        margin-top: 24px;
+    }
+
+    .user-actions a {
+        display: inline-block;
+        margin: 0 12px;
+        padding: 12px 32px;
+        background: linear-gradient(90deg, #f76b1c 0%, #fad961 100%);
+        color: #fff;
+        font-weight: bold;
+        border-radius: 24px;
+        text-decoration: none;
+        font-size: 1em;
+        box-shadow: 0 4px 16px rgba(247, 107, 28, 0.10);
+        transition: background 0.3s, transform 0.2s;
+    }
+
+    .user-actions a:hover {
+        background: linear-gradient(90deg, #fad961 0%, #f76b1c 100%);
+        transform: translateY(-2px) scale(1.04);
+    }
+</style>
+<div class="user-landing-container">
+    <h1>Welcome, {{user.username}}!</h1>
+    <p>
+        You have successfully logged in to the Web-Based User Identification System.<br>
+        Use the options below to explore your dashboard or update your profile.
+    </p>
+    <div class="user-actions">
+        <a href="/user/profile">View Profile</a>
+        <a href="/user/settings">Settings</a>
+        <a href="/auth/logout">Logout</a>
+    </div>
+</div>
