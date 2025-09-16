@@ -4,7 +4,7 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const hbs = require('hbs');
-const serveStatic = require("serve-static");
+const connection = require('./db/mysql');
 
 var app = express();
 
@@ -17,6 +17,16 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+// Database connection
+connection.connect((err) => {
+  if (err) {
+    console.error('MySQL connection error:', err);
+    return;
+  }
+  console.log('Connected to MySQL database!');
+});
+
 
 app.use('/', require('./routes/index'));
 app.use('/auth', require('./routes/auth'));
