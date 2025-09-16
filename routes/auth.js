@@ -2,12 +2,16 @@ var express = require('express');
 var router = express.Router();
 const connection = require('../db/mysql');
 const bcrypt = require('bcrypt');
+const passports = require('./middleware/passport');
+const roleRedirect = require('./middleware/redirect');
 
-// POST /auth/login - Accepts username or email and password
-router.post('/login', function (req, res) {
-    const { username, password } = req.body;
-    //
-});
+router.post('/login',
+    passports.authenticate('local', {
+        failureRedirect: '/auth/login',
+        failureFlash: false
+    }),
+    roleRedirect
+);
 
 router.get('/register', function (req, res) {
     res.render('Auth/register');
