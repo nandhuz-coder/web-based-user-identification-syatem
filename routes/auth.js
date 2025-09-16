@@ -11,7 +11,6 @@ router.get('/register', function (req, res) {
     res.render('Auth/register');
 });
 
-// ...existing code...
 
 router.post('/register-submit', (req, res) => {
     const { username, password, confirmPassword } = req.body;
