@@ -1,6 +1,6 @@
 function roleRedirect(req, res, next) {
     if (!req.user) {
-        return res.redirect('/auth/login');
+        return res.redirect('/');
     }
     if (req.user.role === 'admin') {
         return res.redirect('/admin/dashboard');

@@ -7,6 +7,7 @@ const hbs = require('hbs');
 const connection = require('./db/mysql');
 const session = require('express-session');
 const passport = require('passport');
+const flash = require('connect-flash');
 
 var app = express();
 
@@ -39,7 +40,7 @@ connection.connect((err) => {
   console.log('Connected to MySQL database!');
 });
 
-
+app.use(flash());
 app.use('/', require('./routes/index'));
 app.use('/auth', require('./routes/auth'));
 app.use('/users', require('./routes/users'));

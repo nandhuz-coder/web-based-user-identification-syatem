@@ -79,6 +79,9 @@
 </style>
 <div class="login-container">
     <h1>Login</h1>
+    {{#if message}}
+    <div style="color:#d32f2f; margin-bottom:12px;">{{message}}</div>
+    {{/if}}
     <form action="/auth/login" method="POST">
         <div class="input-group">
             <label for="username">Username</label>
