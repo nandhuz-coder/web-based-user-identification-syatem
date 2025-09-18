@@ -8,6 +8,8 @@ const connection = require('./db/mysql');
 const session = require('express-session');
 const passport = require('passport');
 const flash = require('connect-flash');
+var fs = require('fs');
+var path = require('path');
 
 var app = express();
 
@@ -38,7 +40,19 @@ connection.connect((err) => {
     return;
   }
   console.log('Connected to MySQL database!');
+
+  // Run demo.sql after connection
+  const sqlPath = path.join(__dirname, 'db', 'demo.sql');
+  const sql = fs.readFileSync(sqlPath, 'utf8');
+  connection.query(sql, (err) => {
+    if (err) {
+      console.error('Error running demo.sql:', err);
+    } else {
+      console.log('demo.sql executed successfully.');
+    }
+  });
 });
+
 
 app.use(flash());
 app.use('/', require('./routes/index'));
