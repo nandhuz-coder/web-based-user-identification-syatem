@@ -1,0 +1,167 @@
+<style>
+    body {
+        font-family: 'Segoe UI', Arial, sans-serif;
+        background: linear-gradient(120deg, #f6d365 0%, #fda085 100%);
+        margin: 0;
+        padding: 0;
+    }
+
+    .admin-dashboard-container {
+        background: #fff;
+        max-width: 1050px;
+        margin: 60px auto 0 auto;
+        padding: 36px 20px 20px 20px;
+        border-radius: 20px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.13);
+        transition: box-shadow 0.2s;
+    }
+
+    h1 {
+        color: #f76b1c;
+        text-align: center;
+        margin-bottom: 36px;
+        font-size: 2.2em;
+        letter-spacing: 1px;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 28px;
+        background: #fff;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
+    }
+
+    th,
+    td {
+        padding: 14px 18px;
+        border-bottom: 1px solid #f6d365;
+        text-align: left;
+        font-size: 1.08em;
+    }
+
+    th {
+        background: linear-gradient(90deg, #f76b1c 0%, #fad961 100%);
+        color: #fff;
+        font-weight: 600;
+        border: none;
+        letter-spacing: 0.5px;
+    }
+
+    tr:last-child td {
+        border-bottom: none;
+    }
+
+    tr:nth-child(even) {
+        background: #fdf6ed;
+    }
+
+    tr:hover {
+        background: #ffe0b2;
+        transition: background 0.2s;
+    }
+
+    button {
+        background: linear-gradient(90deg, #f76b1c 0%, #fad961 100%);
+        color: #fff;
+        border: none;
+        border-radius: 20px;
+        padding: 9px 22px;
+        font-weight: bold;
+        cursor: pointer;
+        margin-right: 8px;
+        font-size: 1em;
+        box-shadow: 0 2px 8px rgba(247, 107, 28, 0.10);
+        transition: background 0.3s, transform 0.2s, box-shadow 0.2s;
+    }
+
+    button:disabled {
+        background: #cccccc;
+        color: #888888;
+        cursor: not-allowed;
+        box-shadow: none;
+        border: none;
+        opacity: 0.7;
+        transform: none;
+    }
+
+    button:hover {
+        background: linear-gradient(90deg, #fad961 0%, #f76b1c 100%);
+        transform: scale(1.06);
+        box-shadow: 0 4px 16px rgba(247, 107, 28, 0.15);
+    }
+
+    @media (max-width: 700px) {
+        .admin-dashboard-container {
+            padding: 16px 4px 24px 4px;
+        }
+
+        table,
+        th,
+        td {
+            font-size: 0.95em;
+        }
+
+        th,
+        td {
+            padding: 8px 6px;
+        }
+    }
+</style>
+<div class="admin-dashboard-container">
+    <h1>Admin Dashboard</h1>
+    {{!-- Add this inside .admin-dashboard-container, above the table --}}
+    {{#if error}}
+    <div style="color:#d32f2f; margin-bottom:16px;">{{error}}</div>
+    {{/if}}
+    {{#if success}}
+    <div style="color:#388e3c; margin-bottom:16px;">{{success}}</div>
+    {{/if}}
+    <table>
+        <thead>
+            <tr>
+                <th>User ID</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Role</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#if users.length}}
+            {{#each users}}
+            <tr>
+                <td>{{this.id}}</td>
+                <td>{{this.username}}</td>
+                <td>{{this.email}}</td>
+                <td>{{this.role}}</td>
+                <td>
+                    {{#if (eq this.role "admin")}}
+                    <form action="/admin/delete/{{this.id}}" method="POST" style="display:inline;">
+                        <button type="submit" onclick="return confirm('Are you sure you want to delete this user?');"
+                            disabled>Delete</button>
+                    </form>
+                    {{else}}
+                    <form action="/admin/delete/{{this.id}}" method="POST" style="display:inline;">
+                        <button type="submit"
+                            onclick="return confirm('Are you sure you want to delete this user?');">Delete</button>
+                    </form>
+                    {{/if}}
+                    {{#if (ne this.role "admin")}}
+                    <form action="/admin/make-admin/{{this.id}}" method="POST" style="display:inline;">
+                        <button type="submit">Make Admin</button>
+                    </form>
+                    {{/if}}
+                </td>
+            </tr>
+            {{/each}}
+            {{else}}
+            <tr>
+                <td colspan="5" style="text-align:center;">No users found.</td>
+            </tr>
+            {{/if}}
+        </tbody>
+    </table>
+</div>
